@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import './Login.css'
 const Login = () => {
-    const [signInWithEmailAndPassword, user,] = useSignInWithEmailAndPassword(auth);
+    const [signInWithEmailAndPassword, user,error] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, Googleuser, Googleloading, Googleerror] = useSignInWithGoogle(auth);
     const emailRef = useRef('');
     const passRef = useRef('');
@@ -27,6 +27,10 @@ const Login = () => {
     if (user || Googleuser) {
         navigate(from, { replace: true });
     }
+    let errorEvent
+    if (error || Googleerror) {
+        errorEvent = <p className='text-danger'>Error:{error?.message || Googleerror?.message }</p>
+    }
     return (
         <>
             <div className="container">
@@ -39,7 +43,7 @@ const Login = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control ref={passRef} type="password" placeholder="Password" />
+                            <Form.Control ref={passRef} type="password" placeholder="Password" required/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" label="Check me out" />
@@ -48,6 +52,8 @@ const Login = () => {
                             Submit
                         </Button>
                     </Form>
+                    <p>{errorEvent}</p>
+                    <p>New to here ? <Link className='text-danger text-decoration-none' to={'/RestPass'} onClick={navigate('./RestPass')} >Forget password? </Link> </p>
                     <p>New to here ? <Link className='text-danger text-decoration-none' to={'/Registration'} onClick={navigateRegister} >please Register </Link> </p>
                     <div className='border-right'> OR </div>
                     <div className='social-Login mt-2 mb-5'>

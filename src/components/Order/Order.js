@@ -7,7 +7,7 @@ const Order = () => {
         <div>
             <Container className='text-center'>
                 <Row>
-                    <h2>Order</h2>
+                    <h2>Check Your Order</h2>
                 </Row>
             </Container>
         </div>

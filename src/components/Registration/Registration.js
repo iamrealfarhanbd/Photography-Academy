@@ -3,11 +3,13 @@ import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import { ToastContainer, toast } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 const Registration = () => {
     const [createUserWithEmailAndPassword,user, loading,errorEmailAndPassword] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
     const [updateProfile, updating, errorUpdateProfile] = useUpdateProfile(auth);
-
+  <ToastContainer />
     const nameRef = useRef('');
     const emailRef = useRef('');
     const passRef = useRef('');
@@ -23,6 +25,7 @@ const Registration = () => {
             console.log('Updated profile');
             console.log(user);
             navigate('/');
+            toast("Wow so easy !")
     }
 
     const navigateRegister =()=>{
@@ -57,6 +60,7 @@ const Registration = () => {
                             Submit
                         </Button>
                     </Form>
+                    <ToastContainer />
                     <p>Already Have Account ? <Link className='text-danger text-decoration-none' to={'/Login'} onClick={navigateRegister} >please Login </Link> </p>
                 </div>
             </div>
