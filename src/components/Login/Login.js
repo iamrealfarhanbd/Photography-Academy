@@ -15,7 +15,6 @@ const Login = () => {
     let from = location.state?.from?.pathname || "/";
     let errorEvent;
     if (Googleerror || error) {
-        console.log(Googleerror?.message)
         errorEvent = <p className='text-danger'>Error:{Googleerror?.message} {error?.message}</p>
     }
     const handleSubmit = event => {

@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 const Registration = () => {
     const [createUserWithEmailAndPassword,user, loading,errorEmailAndPassword] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
     const [updateProfile, updating, errorUpdateProfile] = useUpdateProfile(auth);
-
+    const [signInWithGoogle, Googleuser, Googleloading, Googleerror] = useSignInWithGoogle(auth);
     const nameRef = useRef('');
     const emailRef = useRef('');
     const passRef = useRef('');
@@ -24,9 +24,8 @@ const Registration = () => {
             console.log(user);
           
     }
-    if ( errorEmailAndPassword) {
-        console.log(errorEmailAndPassword?.message)
-        errorEvent = <p className='text-danger'>Error:{errorEmailAndPassword?.message}</p>
+    if (Googleerror || errorEmailAndPassword) {
+        errorEvent = <p className='text-danger'>Error:{Googleerror?.message} {errorEmailAndPassword?.message}</p>
     }
     const navigateRegister =()=>{
         navigate('/Login');
@@ -62,6 +61,16 @@ const Registration = () => {
                     </Form>
                 {errorEvent}
                     <p>Already Have Account ? <Link className='text-danger text-decoration-none' to={'/Login'} onClick={navigateRegister} >please Login </Link> </p>
+                    <div className='border-right'> OR </div>
+                    <div className='social-Login mt-2 mb-5'>
+                        <div id="gSignInWrapper" onClick={() => signInWithGoogle()}>
+                            <span className="label">Sign up with: </span>
+                            <div id="customBtn" className="customGPlusSignIn">
+                                <span className="icon"></span>
+                                <span className="buttonText"> Google</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
