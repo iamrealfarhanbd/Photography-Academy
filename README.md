@@ -1,6 +1,7 @@
 # Photography Academy
+This Is best Learning Site because i am your instructor.
 
-Live URL [Photography Academy](https://photographyacademy-3469b.web.app/).
+Live URL [Photography Academy](https://photographyacademy-3469b.web.app).
 
 ## Features and functionality
 * Private/protected routes in Service page
