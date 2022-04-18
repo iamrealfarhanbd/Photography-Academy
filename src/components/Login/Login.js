@@ -1,28 +1,40 @@
 import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
+import './Login.css'
 const Login = () => {
+    const [signInWithEmailAndPassword, user,] = useSignInWithEmailAndPassword(auth);
+    const [signInWithGoogle, Googleuser, Googleloading, Googleerror] = useSignInWithGoogle(auth);
     const emailRef = useRef('');
     const passRef = useRef('');
     const navigate = useNavigate();
-    const handleSubmit = event =>{
+    let location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+
+
+    const handleSubmit = event => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passRef.current.value;
-        console.log(email,password)
+        signInWithEmailAndPassword(email, password);
     }
-    const navigateRegister =event=>{
+    const navigateRegister = () => {
         navigate('/Registration')
+    }
+    if (user || Googleuser) {
+        navigate(from, { replace: true });
     }
     return (
         <>
             <div className="container">
                 <div className="row">
-                    <Form>
+                    <Form className=' m-5'>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control ref={emailRef} type="email" placeholder="Enter email" required/>
+                            <Form.Control ref={emailRef} type="email" placeholder="Enter email" required />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -36,7 +48,18 @@ const Login = () => {
                             Submit
                         </Button>
                     </Form>
-                    <p>new to here ? <Link className='text-danger text-decoration-none' to={'/Registration'} onClick={navigateRegister} >please Register </Link> </p>
+                    <p>New to here ? <Link className='text-danger text-decoration-none' to={'/Registration'} onClick={navigateRegister} >please Register </Link> </p>
+                    <div className='border-right'> OR </div>
+                    <div className='social-Login mt-2 mb-5'>
+                        <div id="gSignInWrapper" onClick={() => signInWithGoogle()}>
+                            <span className="label">Sign in with: </span>
+                            <div id="customBtn" className="customGPlusSignIn">
+                                <span className="icon"></span>
+                                <span className="buttonText"> Google</span>
+                            </div>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
         </>

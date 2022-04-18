@@ -1,27 +1,42 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 const Registration = () => {
+    const [createUserWithEmailAndPassword,user, loading,errorEmailAndPassword] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
+    const [updateProfile, updating, errorUpdateProfile] = useUpdateProfile(auth);
+
     const nameRef = useRef('');
     const emailRef = useRef('');
     const passRef = useRef('');
     const navigate = useNavigate();
 
-    const handleRegistration = event =>{
+    const handleRegistration = async (event) =>{
         event.preventDefault();
+        const name = nameRef.current.value;
         const email = emailRef.current.value;
         const password = passRef.current.value;
-        console.log(email,password)
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName:name });
+            console.log('Updated profile');
+            console.log(user);
+            navigate('/');
     }
-    const navigateRegister =event=>{
-        navigate('/Login')
+
+    const navigateRegister =()=>{
+        navigate('/Login');
+    }
+    if(user){
+        navigate('/');
+        console.log(user);
     }
     return (
         <>
              <div className="container">
                 <div className="row">
-                    <Form>
+                    <Form className=' m-5'>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name address</Form.Label>
                             <Form.Control ref={nameRef} type="text" placeholder="Enter email" />
@@ -42,7 +57,7 @@ const Registration = () => {
                             Submit
                         </Button>
                     </Form>
-                    <p>new to here ? <Link className='text-danger text-decoration-none' to={'/Login'} onClick={navigateRegister} >please Login </Link> </p>
+                    <p>Already Have Account ? <Link className='text-danger text-decoration-none' to={'/Login'} onClick={navigateRegister} >please Login </Link> </p>
                 </div>
             </div>
         </>
