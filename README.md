@@ -7,6 +7,8 @@ Live URL [Photography Academy](https://photographyacademy-3469b.web.app/).
 * Without sign in or sign up no one can purchase serices
 * Password reset option available
 * Google login available
+* about page
+* 404 route
 
 ## List of Technologies
 
