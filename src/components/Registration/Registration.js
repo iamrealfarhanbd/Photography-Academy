@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 const Registration = () => {
     const [createUserWithEmailAndPassword,user, loading,errorEmailAndPassword] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
@@ -10,8 +10,10 @@ const Registration = () => {
     const nameRef = useRef('');
     const emailRef = useRef('');
     const passRef = useRef('');
+    let location = useLocation();
     const [agree, setAgree] = useState(false);
     const navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
     let errorEvent;
     const handleRegistration = async (event) =>{
         event.preventDefault();
@@ -33,6 +35,9 @@ const Registration = () => {
     if(user){
         navigate('/');
         console.log(user);
+    }
+    if (Googleuser || user) {
+        navigate(from, { replace: true });
     }
     return (
         <>
