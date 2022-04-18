@@ -1,20 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { ToastContainer, toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
 const Registration = () => {
     const [createUserWithEmailAndPassword,user, loading,errorEmailAndPassword] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
     const [updateProfile, updating, errorUpdateProfile] = useUpdateProfile(auth);
-  <ToastContainer />
+
     const nameRef = useRef('');
     const emailRef = useRef('');
     const passRef = useRef('');
+    const [agree, setAgree] = useState(false);
     const navigate = useNavigate();
-
+    let errorEvent;
     const handleRegistration = async (event) =>{
         event.preventDefault();
         const name = nameRef.current.value;
@@ -24,10 +22,12 @@ const Registration = () => {
         await updateProfile({ displayName:name });
             console.log('Updated profile');
             console.log(user);
-            navigate('/');
-            toast("Wow so easy !")
+          
     }
-
+    if ( errorEmailAndPassword) {
+        console.log(errorEmailAndPassword?.message)
+        errorEvent = <p className='text-danger'>Error:{errorEmailAndPassword?.message}</p>
+    }
     const navigateRegister =()=>{
         navigate('/Login');
     }
@@ -54,13 +54,13 @@ const Registration = () => {
                             <Form.Control ref={passRef} type="password" placeholder="Password" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
+                            <Form.Check className={`ps-2 ${agree ? 'text-primary' : 'text-danger'}`} onClick={()=>setAgree(!agree)} type="checkbox" label="agree with tramss and Condition" />
                         </Form.Group>
-                        <Button variant="primary" type="submit" onClick={handleRegistration}>
+                        <Button disabled={!agree} variant="primary" type="submit" onClick={handleRegistration}>
                             Submit
                         </Button>
                     </Form>
-                    <ToastContainer />
+                {errorEvent}
                     <p>Already Have Account ? <Link className='text-danger text-decoration-none' to={'/Login'} onClick={navigateRegister} >please Login </Link> </p>
                 </div>
             </div>

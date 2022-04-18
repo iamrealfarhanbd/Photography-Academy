@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import './Login.css'
 const Login = () => {
-    const [signInWithEmailAndPassword, user,error] = useSignInWithEmailAndPassword(auth);
+    const [signInWithEmailAndPassword,user, loading, error,] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, Googleuser, Googleloading, Googleerror] = useSignInWithGoogle(auth);
     const emailRef = useRef('');
     const passRef = useRef('');
@@ -14,7 +14,10 @@ const Login = () => {
 
     let from = location.state?.from?.pathname || "/";
     let errorEvent;
-
+    if (Googleerror || error) {
+        console.log(Googleerror?.message)
+        errorEvent = <p className='text-danger'>Error:{Googleerror?.message} {error?.message}</p>
+    }
     const handleSubmit = event => {
         event.preventDefault();
         const email = emailRef.current.value;
@@ -31,10 +34,7 @@ const Login = () => {
         navigate(from, { replace: true });
     }
     
-    if (error) {
-        console.log(error.message)
-        errorEvent = <p className='text-danger'>Error:{error?.message} </p>
-    }
+  
     return (
         <>
             <div className="container">
@@ -49,15 +49,12 @@ const Login = () => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control ref={passRef} type="password" placeholder="Password" required/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group>
                         <Button variant="primary" type="submit" onClick={handleSubmit}>
                             Submit
                         </Button>
                     </Form>
                     <p>{errorEvent}</p>
-                    <p>New to here ? <Link className='text-danger text-decoration-none' to={'/RestPass'} onClick={navigateresetPass} >Forget password? </Link> </p>
+                    <p><Link className='text-danger text-decoration-none' to={'/RestPass'} onClick={navigateresetPass} >Forget password? </Link> </p>
                     <p>New to here ? <Link className='text-danger text-decoration-none' to={'/Registration'} onClick={navigateRegister} >please Register </Link> </p>
                     <div className='border-right'> OR </div>
                     <div className='social-Login mt-2 mb-5'>
