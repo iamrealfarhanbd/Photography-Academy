@@ -9,25 +9,59 @@ const Blog = () => {
                 <Row>
                     <Col xs={12} md={6} className="mt-5">
                         <Card>
-                            <Card.Header as="h5">What is a semantic tag?</Card.Header>
+                            <Card.Header as="h5">What other services does firebase provide other than authentication?
+                            </Card.Header>
                             <Card.Body>
-                                <Card.Text>
-                                    {
-                                        `There are a bunch of Semantic tags in HTML5. They are header, footer, article, main, nav, and many others.  Header tag indicates header of the page. Inside a header we can add nav (<nav>) which is also a Semantic tag. Footer (<footer>) indicates the footer of the page. The <article> element specifies independent, self-contained content.`
-                                    }
-                                </Card.Text>
+                                <Card.Text> There are many services that firebase provides.</Card.Text>
+                                <ul>
+                                    <li>Cloud Firestore</li>
+                                    <li>Cloud Storage</li>
+                                    <li>Hosting</li>
+                                    <li>Google Analytics</li>
+                                    <li>Predictions</li>
+                                    <li>Cloud Messaging</li>
+                                </ul>
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col xs={12} md={6} className="mt-5">
                         <Card>
-                            <Card.Header as="h5">What is context API?</Card.Header>
+                            <Card.Header as="h5">What is the difference between authentication and authorization?</Card.Header>
                             <Card.Body>
-                                <Card.Text>
-                                    {
-                                        `React Hooks provides a concept called context. React context API allows you to easily access data at different levels of the component tree, without passing prop to every level. This is the alternative to "prop drilling", or passing props from grandparent to parent to child, and so on. With the help of context API, data can be sent easily to any child components from any parent components.`
-                                    }
-                                </Card.Text>
+                            <Card.Text> Authentication -</Card.Text>
+                                <ul>
+                                    <li>Verifies the user's identity.</li>
+                                    <li>It is visible to the user.</li>
+                                    <li>It is Changeable by the user.</li>
+                                </ul>
+                                <Card.Text> Authorization - </Card.Text>
+                                <ul>
+                                    <li>Grants or denies permission to the user do something.</li>
+                                    <li>It is not visible to the user.</li>
+                                    <li>It cannot be changed by the user. </li>
+                                </ul>
+                     
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col xs={12} md={6} className="mt-5">
+                        <Card>
+                            <Card.Header as="h5">Why do you use firebase? </Card.Header>
+                            <Card.Body>
+                            <Card.Text>Firebase is a complete backend solution that can manage authentication, real-time database and hosting as well. You can use firebase in iOS apps, android apps and even in web apps. </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col xs={12} md={6} className="mt-5">
+                        <Card>
+                            <Card.Header as="h5">What other options do you have to implement authentication? </Card.Header>
+                            <Card.Body>
+                            <Card.Text> Options for authentication -  </Card.Text>
+                                <ul>
+                                    <li>Password-based authentication</li>
+                                    <li>Two-factor/multi factor authentication</li>
+                                    <li>Biometric authentication</li>
+                                </ul>
                             </Card.Body>
                         </Card>
                     </Col>

@@ -13,6 +13,7 @@ import NotFound from './components/NotFound/NotFound';
 import Blog from './components/Blog/Blog';
 import Footer from './components/Footer/Footer';
 import RestPass from './components/Login/RestPass/RestPass';
+import About from './components/About/About';
 function App() {
   return (
     <div className="App">
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/RestPass" element={<RestPass />} />
         <Route path="/Blog" element={<Blog />} />
+        <Route path="/About" element={<About />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/AllCourse" element={<Allcourse />} />
         <Route path="/AllCourse/:courseId" element={<DetailsCourse />} />

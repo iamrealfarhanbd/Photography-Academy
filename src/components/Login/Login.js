@@ -13,7 +13,7 @@ const Login = () => {
     let location = useLocation();
 
     let from = location.state?.from?.pathname || "/";
-
+    let errorEvent;
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -24,12 +24,16 @@ const Login = () => {
     const navigateRegister = () => {
         navigate('/Registration')
     }
+    const navigateresetPass = () => {
+        navigate('/RestPass')
+    }
     if (user || Googleuser) {
         navigate(from, { replace: true });
     }
-    let errorEvent
-    if (error || Googleerror) {
-        errorEvent = <p className='text-danger'>Error:{error?.message || Googleerror?.message }</p>
+    
+    if (error) {
+        console.log(error.message)
+        errorEvent = <p className='text-danger'>Error:{error?.message} </p>
     }
     return (
         <>
@@ -53,7 +57,7 @@ const Login = () => {
                         </Button>
                     </Form>
                     <p>{errorEvent}</p>
-                    <p>New to here ? <Link className='text-danger text-decoration-none' to={'/RestPass'} onClick={navigate('./RestPass')} >Forget password? </Link> </p>
+                    <p>New to here ? <Link className='text-danger text-decoration-none' to={'/RestPass'} onClick={navigateresetPass} >Forget password? </Link> </p>
                     <p>New to here ? <Link className='text-danger text-decoration-none' to={'/Registration'} onClick={navigateRegister} >please Register </Link> </p>
                     <div className='border-right'> OR </div>
                     <div className='social-Login mt-2 mb-5'>
